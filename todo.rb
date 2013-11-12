@@ -24,8 +24,11 @@ def add_task(taskName)
 end
 
 #list tasks method
-def list_tasks(status = "To-do")
+def list_tasks(status = "To-Do")
+Task.all(:status => status).each { |task| 
+puts task.id.to_s + ": " + task.title + "- " + task.status
 
+}
 end
 
 #update task method
