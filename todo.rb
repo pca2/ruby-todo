@@ -24,10 +24,9 @@ def add_task(taskName)
 end
 
 #list tasks method
-def list_tasks(status = "To-Do")
-Task.all(:status => status).each { |task| 
-puts task.id.to_s + ": " + task.title + "- " + task.status
-
+def list_tasks()
+  Task.all().each { |task| 
+  puts task.id.to_s + ": " + task.title + " | " + task.status
 }
 end
 
@@ -37,12 +36,22 @@ def update_task(id)
 end
 
 #Remove task method
-def remove_task()
-
+def remove_task(id)
+  t = Task.get(id).destroy
 end
 
+
 #case handling for each method at runtime
-case
-  when ARGV[0] == "ls"
-    list_tasks()
+case ARGV[0]
+  when "ls"
+    if ARGV[1]
+      list_tasks(ARGV[1]) 
+    else 
+      list_tasks()
+    end
+  when "rm"
+    remove_task(ARGV[1])
+  when "add"
+    add_task(ARGV[1])
+
 end
