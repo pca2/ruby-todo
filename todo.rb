@@ -21,6 +21,7 @@ DataMapper.finalize.auto_upgrade!
 #Add a task method
 def add_task(taskName)
   Task.create :title => taskName, :status => "To-Do"
+  puts "Task added!"
 end
 
 #list tasks method
@@ -35,9 +36,17 @@ def update_task(id)
 
 end
 
+#Do task method
+def do_task(id)
+  Task.get(id).update(:status => "Done")
+  puts "Task #{id} marked done!"
+end
+
+
 #Remove task method
 def remove_task(id)
   t = Task.get(id).destroy
+  puts "Task #{id} removed!"
 end
 
 
@@ -53,5 +62,6 @@ case ARGV[0]
     remove_task(ARGV[1])
   when "add"
     add_task(ARGV[1])
-
+  when "do"
+    do_task(ARGV[1])
 end
