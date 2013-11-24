@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 require 'rubygems'
-require 'data_mapper'
-
+require 'data_mapper'#DB ORM gem
+#A very basic CLI to-do app using Ruby and SQLite
+#Author: Carleton Atwater <atwaterc@gmail.com>
 #DB file to store data
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}//todo.db")
 
@@ -11,7 +12,7 @@ class Task
 
 	property :id, Serial
 	property :title, String
-	property  :status, String
+	property :status, String
 	property :created_at, DateTime
 end
 
@@ -32,8 +33,9 @@ def list_tasks()
 end
 
 #update task method
-def update_task(id)
-
+def update_task(id,title)
+  Task.get(id).update(:title => title)
+  puts "Task #{id} updated to #{title}."
 end
 
 #Do task method
@@ -58,6 +60,8 @@ case ARGV[0]
     else 
       list_tasks()
     end
+  when "update"
+    update_task(ARGV[1],ARGV[2])
   when "rm"
     remove_task(ARGV[1])
   when "add"
