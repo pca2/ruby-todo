@@ -22,20 +22,21 @@ DataMapper.finalize.auto_upgrade!
 #Add a task method
 def add_task(taskName)
   Task.create :title => taskName, :status => "To-Do"
-  puts "Task added!"
+  task_id = Task.last.id 
+   puts "Task #{task_id} added!"
 end
 
 #list tasks method
 def list_tasks()
   Task.all().each { |task| 
-  puts task.id.to_s + ": " + task.title + " | " + task.status
+  puts task.id.to_s + ": " + task.status + " | " + task.title
 }
 end
 
-#update task method
-def update_task(id,title)
+#edit task method
+def edit_task(id,title)
   Task.get(id).update(:title => title)
-  puts "Task #{id} updated to #{title}."
+  puts "Task #{id} edited to be #{title}."
 end
 
 #Do task method
@@ -60,8 +61,8 @@ case ARGV[0]
     else 
       list_tasks()
     end
-  when "update"
-    update_task(ARGV[1],ARGV[2])
+  when "edit"
+    edit_task(ARGV[1],ARGV[2])
   when "rm"
     remove_task(ARGV[1])
   when "add"
