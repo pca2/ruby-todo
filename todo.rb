@@ -76,6 +76,14 @@ class Todo < Thor
 	  puts "Task #{id} removed!"
 	end
 
+  desc "set <ID> <STATUS>", "Set status of task with <ID> to either To-Do, Doing, or Done."
+  #set status
+  def set(id, status)
+	  Task.get(id).update(:status => "#{status}")
+	  puts "Task #{id} set to #{status}!"
+  end
+
+
 # End Class
 end
 
