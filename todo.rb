@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'rubygems'
+require 'colorize'
 require 'thor'
 require 'data_mapper'#DB ORM gem
 #A very basic CLI to-do app using Ruby and SQLite
@@ -44,11 +45,11 @@ class Todo < Thor
 	def ls()
     if options[:task_status]
       Task.all(:status => options[:task_status]).each { |task| 
-      puts task.id.to_s + ": " + task.status + " | " + task.title
+      puts (task.id.to_s + ": " + task.status + " | " + task.title).yellow
       }
     else
      Task.all().each { |task| 
-	   puts task.id.to_s + ": " + task.status + " | " + task.title
+	   puts (task.id.to_s + ": ").yellow + task.status.green + " | ".red + task.title.blue
 	   }
 	  end
   end
@@ -71,7 +72,7 @@ class Todo < Thor
   desc "rm ID", "Delete task ID"
 	#Remove task method
 	def rm(id)
-	  t = Task.get(id).destroy
+	  Task.get(id).destroy
 	  puts "Task #{id} removed!"
 	end
 
